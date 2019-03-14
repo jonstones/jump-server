@@ -1,8 +1,11 @@
 FROM ubuntu:latest
 
 RUN apt-get update && apt-get install -y apt-transport-https lsb-release software-properties-common dirmngr \
+    vi vim \
     && apt-get -y upgrade \
     && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'PS1="\u@DOCKER-JMP \d \t >"' >> /etc/profile
 
 #-------------------------------------------------------
 # install az cli
