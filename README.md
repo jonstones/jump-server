@@ -16,6 +16,7 @@ coming soon:
 * vagrant
 * gcp cli
 * kubernetes cli?
+* git
 
 ## Ever-Green Policy
 
