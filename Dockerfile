@@ -23,3 +23,10 @@ RUN AZ_REPO=$(lsb_release -cs) \
 	&& rm -rf /var/lib/apt/lists/*
 
 #-------------------------------------------------------
+
+export DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y tzdata \
+    && echo "Etc/UTC" > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata \
+    && apt-get install -y awscli \
+	&& rm -rf /var/lib/apt/lists/*
