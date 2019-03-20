@@ -1,8 +1,8 @@
 FROM ubuntu:latest
 
-ENV http_proxy: "http://ldn3log1.ebrd.com:8888"
-ENV https_proxy: "http://ldn3log1.ebrd.com:8888"
-ENV no_proxy: "ldn1cvs2.ebrd.com,localhost,docker,docker:2375"
+ENV http_proxy "http://ldn3log1.ebrd.com:8888"
+ENV https_proxy "http://ldn3log1.ebrd.com:8888"
+ENV no_proxy "ldn1cvs2.ebrd.com,localhost,docker,docker:2375"
 
 RUN apt-get update && apt-get install -y apt-transport-https lsb-release software-properties-common dirmngr \
     vi vim \
