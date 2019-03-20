@@ -11,6 +11,7 @@ The current base image is ubuntu:latest, and it has the following installed:
 * terraform
 
 coming soon:
+
 * ansible
 * vagrant
 * gcp cli
