@@ -29,4 +29,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
     && apt-get install -y awscli \
     && rm -rf /var/lib/apt/lists/*
 
+#-------------------------------------------------------
+# take Terraform from their "latest" image
+COPY --from=hashicorp/terraform:light /bin/terraform /bin/terraform
 
