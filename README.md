@@ -6,17 +6,17 @@ This is a container image that I use as a base image to work from.
 
 The current base image is ubuntu:latest, and it has the following installed:
 
-* aws cli ( aws )
-* azure cli ( az )
-* terraform
+* AWS cli ( aws )
+* Azure cli ( az )
+* Google cloud cli ( gcloud )
+* Kubernetes ( kubectl )
+* Terraform
+* Ansible
+* Git
 
-coming soon:
+not doing:
 
-* ansible
-* vagrant
-* gcp cli
-* kubernetes cli?
-* git
+* vagrant - too many dependency packages
 
 ## Ever-Green Policy
 
