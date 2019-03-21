@@ -31,7 +31,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
 
 #-------------------------------------------------------
 
-RUN apt-get update && apt-get install -y python vagrant git ansible \
+RUN apt-get update && apt-get install -y python git ansible \
    && rm -rf /var/lib/apt/lists/*
 
 #-------------------------------------------------------
