@@ -19,8 +19,10 @@ before_script:
 update-prod:
   stage: build
   script:
+    - export TODAY=`date -I`
     - docker build --pull -t "$CI_REGISTRY_IMAGE" .
     - docker push "$CI_REGISTRY_IMAGE"
+    - docker tag "${CI_REGISTRY_IMAGE}" "${CI_REGISTRY_IMAGE}:${TODAY}"
   only:
     - master
 
