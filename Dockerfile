@@ -45,3 +45,6 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
     
 # take Terraform from their "latest" image
 COPY --from=hashicorp/terraform:light /bin/terraform /bin/terraform
+
+# Add EBRD Proxy Setup Environment variables
+COPY ebrd-proxy.sh /ebrd-proxy.sh
