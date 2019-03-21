@@ -33,5 +33,5 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
 # take Terraform from their "latest" image
 COPY --from=hashicorp/terraform:light /bin/terraform /bin/terraform
 
-RUN apt-get update && apt-get install python vagrant git openssh ansible \
+RUN apt-get update && apt-get install python vagrant git ansible \
    && rm -rf /var/lib/apt/lists/*
