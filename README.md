@@ -1,4 +1,5 @@
-# Jump Server Container
+# Jump Server Container - 
+[![pipeline status](https://gitlab.com/js-devops/sysadmin/jump-server/badges/master/pipeline.svg)](https://gitlab.com/js-devops/sysadmin/jump-server/commits/master)
 
 This is a container image that I use as a base image to work from.
 
