@@ -1,0 +1,4 @@
+THINGS=stuff
+FIELDS="values work too!"
+NEWLINES="those\\nnifty\\nlinebreaks"
+FROM_IMAGE_SHA=ubuntu:latest
