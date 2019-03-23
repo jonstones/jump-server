@@ -47,9 +47,8 @@ RUN apt-get install -y kubectl
 # CleanUp
 RUN rm -rf /var/lib/apt/lists/*
 
-# take Terraform from their "latest" image
-# IMAGE: hashicorp/terraform:light 
-COPY --from=%TERRAFORM_IMAGE_SHA% /bin/terraform /bin/terraform
+# take Terraform from their "latest" image - IMAGE: hashicorp/terraform:light 
+COPY --from=hashicorp/terraform:light /bin/terraform /bin/terraform
 
 # Add EBRD Proxy Setup Environment variables
 COPY ebrd-proxy.sh /ebrd-proxy.sh
