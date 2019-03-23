@@ -1,3 +1,6 @@
+##### DONT NOT EDIT ME. THIS FILE IS GENERATED. EDIT Dockerfile.Template #####
+
+#from: ubuntu:latest
 FROM ubuntu:latest
 
 RUN apt-get update && apt-get -y upgrade && \
@@ -12,7 +15,7 @@ RUN AZ_REPO=$(lsb_release -cs) \
     && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list \
     && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
     && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
-	&& apt-get update && apt-get install -y azure-cli
+   && apt-get update && apt-get install -y azure-cli
 
 #-------------------------------------------------------
 
@@ -45,7 +48,8 @@ RUN apt-get install -y kubectl
 RUN rm -rf /var/lib/apt/lists/*
 
 # take Terraform from their "latest" image
-COPY --from=hashicorp/terraform:light /bin/terraform /bin/terraform
+# IMAGE: hashicorp/terraform:light 
+COPY --from=%TERRAFORM_IMAGE_SHA% /bin/terraform /bin/terraform
 
 # Add EBRD Proxy Setup Environment variables
 COPY ebrd-proxy.sh /ebrd-proxy.sh
