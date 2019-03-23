@@ -1,6 +1,6 @@
 # When editing, use "set noexpandtab"
-# run with : make build push
-#
+# run with : make all
+# extras : make ebrdproxy login - to enable ebrdproxy, and also login if remote
 
 # Makefile to control the build of the Dockerfile$
 
@@ -18,16 +18,25 @@ upgrade:
 
 ## Build docker file from template
 Dockerfile: Dockerfile.versions Dockerfile.template
-	/bin/sh Dockerfile.generate.sh
-	#exit with no error if no change
-	# combine version file & template into a dockerfile, and commit.. if changed.
+	sh Dockerfile.generate.sh
+	# TODO: exit with no error if no change
+	# TODO: combine version file & template into a dockerfile, and commit.. if changed.
 
 build:
-	@docker build -t ${IMG} .
-	@docker tag ${IMG} ${CURRENT}
+	docker build -t ${IMG} .
+	docker tag ${IMG} ${CURRENT}
 
 push:
-	@docker push ${NAME}
+	docker push ${NAME}
+
+# --- Extras ---
 
 login:
-	@docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+	docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
+
+ebrdproxy:
+	@echo EBRD Proxy Set.
+	@export http_proxy="http://ldn3log1.ebrd.com:8888"
+	@export https_proxy="http://ldn3log1.ebrd.com:8888"
+	@export no_proxy="ldn1cvs2.ebrd.com,localhost,docker,docker:2375"
+
