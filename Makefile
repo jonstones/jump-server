@@ -40,3 +40,24 @@ ebrdproxy:
 	@export https_proxy="http://ldn3log1.ebrd.com:8888"
 	@export no_proxy="ldn1cvs2.ebrd.com,localhost,docker,docker:2375"
 
+
+--
+update-prod:
+  stage: build
+  script:
+    - export TODAY=`date -I`
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:${TODAY}" .
+    - docker push "$CI_REGISTRY_IMAGE:${TODAY}"
+    - docker tag "${CI_REGISTRY_IMAGE}:${TODAY}" "${CI_REGISTRY_IMAGE}"
+    - docker push "${CI_REGISTRY_IMAGE}"
+  only:
+    - master
+
+test-build:
+  stage: build
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+  except:
+    - master
+
