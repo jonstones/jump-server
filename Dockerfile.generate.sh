@@ -1,15 +1,22 @@
 #!/usr/bin/env sh
 
-config="$1"
-template="$2"
-destination="$3"
+verions="Dockerfile.versions"
+template="Dockerfile.template"
+destination="Dockerfile"
 
-cp "$template" "$destination"
+TEMPFILE=$(mktemp /tmp/Dockerfile_generate.XXXXXXXXX) || { echo "Failed to create temp file"; exit 1; }
+cp "${template}" "${TEMPFILE}"
+
+HEADER='##### DONT NOT EDIT ME. THIS FILE IS GENERATED. EDIT Dockerfile.Template #####'
+sed -i -e "s|%HEADER%|${HEADER}|g" "${TEMPFILE}"
 
 while read line; do
     setting="$( echo "$line" | cut -d '=' -f 1 )"
     value="$( echo "$line" | cut -d '=' -f 2- )"
 
-    sed -i -e "s;%${setting}%;${value};g" "$destination"
-done < "$config"
+    sed -i -e "s|%${setting}%|${value}|g" "${TEMPFILE}"
+
+done < "$versions"
+
+mv "${TEMPFILE}" "${DESTINATION}"
 
