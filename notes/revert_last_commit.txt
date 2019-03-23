@@ -1,0 +1,10 @@
+git reset --soft HEAD~1
+
+will leave the changes
+
+
+
+git reset --HARD HEAD~1
+
+will remove any changes
+
