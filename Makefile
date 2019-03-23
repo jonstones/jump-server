@@ -5,7 +5,7 @@
 # Makefile to control the build of the Dockerfile$
 
 NAME   := acmecorp/foo
-TAG    := $$(git log -1 --pretty=%!H(MISSING))
+SHA    := $$(git rev-parse --short HEAD)
 IMG    := ${NAME}:${TAG}
 CURRENT := ${NAME}:current
 
@@ -15,22 +15,22 @@ show_info:
 
 ## Upgrade Versions
 upgrade:
-	sh Dockerfile.upgrade.sh
+	sh scripts/Dockerfile.upgrade.sh
     
 ## Build docker file from template
 Dockerfile: Dockerfile.versions Dockerfile.template
-	sh Dockerfile.generate.sh
+	sh scripts/Dockerfile.generate.sh
 	# TODO: exit with no error if no change
 	
 build:
-	docker build --pull -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_SHORT_SHA}" .
-	docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+	docker build --pull -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" .
+	docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}"
+	docker tag "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" "${CI_COMMIT_REF_SLUG}"
+	docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}"
 	
 deploy:
-	docker build --pull -t "$CI_REGISTRY_IMAGE:${TODAY}" .
-	docker push "$CI_REGISTRY_IMAGE:${TODAY}"
-	docker tag "${CI_REGISTRY_IMAGE}:${TODAY}" "${CI_REGISTRY_IMAGE}"
-	docker push "${CI_REGISTRY_IMAGE}"
+	docker tag "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" "${CI_REGISTRY_IMAGE}:current"
+	docker push "${CI_REGISTRY_IMAGE}:current"
 
 # --- Extras ---
 
