@@ -10,18 +10,19 @@ variables:
   DOCKER_DRIVER: overlay2
 
 before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+   - make login
 
 update-prod:
   stage: build
   script:
-    - make update-prod
+    - make prod
   only:
     - master
 
 test-build:
   stage: build
   script:
+    - make upgrade Dockerfile 
     - make test-build
   except:
     - master
