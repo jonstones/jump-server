@@ -4,10 +4,13 @@
 
 # Makefile to control the build of the Dockerfile$
 
-NAME   := acmecorp/foo
+NAME   := jonstones/jump-server
 SHA    := $$(git rev-parse --short HEAD)
-IMG    := ${NAME}:${TAG}
 CURRENT := ${NAME}:current
+
+DOCKER_USER=${CI_REGISTRY_USER:-DEFAULT_USER}
+DOCKER_PASS=${CI_REGISTRY_PASSWORD:-DEFAULT_PASS}
+DOCKER_REG=${CI_REGISTRY:-DEFAULT_REG}
 
 # Dont run if no params
 show_info:
@@ -23,19 +26,19 @@ Dockerfile: Dockerfile.versions Dockerfile.template
 	# TODO: exit with no error if no change
 	
 build:
-	docker build --pull -t "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" .
-	docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}"
-	docker tag "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" "${CI_COMMIT_REF_SLUG}"
-	docker push "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG}"
+	docker build --pull -t "${NAME}:${SHA}" .
+	docker push "${NAME}:${SHA}"
+	docker tag "${NAME}:${SHA}" "${CI_COMMIT_REF_SLUG}"
+	docker push "${NAME}:${CI_COMMIT_REF_SLUG}"
 	
 deploy:
-	docker tag "${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA}" "${CI_REGISTRY_IMAGE}:current"
-	docker push "${CI_REGISTRY_IMAGE}:current"
+	docker tag "${NAME}:${SHA}" "${CURRENT}"
+	docker push "${CURRENT}"
 
 # --- Extras ---
 
 login:
-	docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+	docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}" ${DOCKER_REG}
 
 ebrdproxy:
 	@echo EBRD Proxy Set.
