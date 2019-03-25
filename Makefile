@@ -6,7 +6,7 @@
 # NAME	:= jonstones/jump-server
 NAME	:= ${CI_PROJECT_PATH}
 GITSHA	:= $$(git rev-parse --short HEAD)
-CURRENT	:= ${NAME}:current
+STABLE	:= ${NAME}:stable
 BRANCH	:= ${CI_COMMIT_REF_SLUG}
 
 # Dont run if no params
@@ -32,8 +32,8 @@ build:
 	
 deploy:
 	docker pull "${NAME}:${GITSHA}"
-	docker tag "${NAME}:${GITSHA}" "${CURRENT}"
-	docker push "${CURRENT}"
+	docker tag "${NAME}:${GITSHA}" "${STABLE}"
+	docker push "${STABLE}"
 
 # --- Extras ---
 
