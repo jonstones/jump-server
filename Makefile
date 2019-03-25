@@ -21,7 +21,7 @@ upgrade:
     
 ## Build Dockerfile from template
 # Git does not track timestamps, so we cannot do dependency checking on Dockerfile.versions Dockerfile.template
-Dockerfile: 
+generate_dockerfile: 
 	@echo Generating DockerFile from any updated Versions...
 	@sh scripts/Dockerfile.generate.sh
 	
