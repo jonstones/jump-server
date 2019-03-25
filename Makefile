@@ -43,7 +43,7 @@ deploy:
 # --- Extras ---
 
 login:
-	docker login -u "${DOCKER_USER}" -p "${DOCKER_PASS}" ${DOCKER_REG}
+    docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 ebrdproxy:
 	@echo EBRD Proxy Set.
