@@ -1,4 +1,5 @@
+TODAY=2019-03-25
 THINGS=stuff
 FIELDS="values work too!"
 FROM_IMAGE_SHA=ubuntu:latest
-TERRAFORM_IMAGE_SHA=hashicorp/terraform:light 
+TERRAFORM_IMAGE_SHA=hashicorp/terraform:light
