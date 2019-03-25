@@ -1,20 +1,22 @@
 # When editing, use "set noexpandtab"
-# run with : make all
-# extras : make ebrdproxy login - to enable ebrdproxy, and also login if remote
 
 # Makefile to control the build of the Dockerfile$
 
 NAME   := jonstones/jump-server
-SHA    := $$(git rev-parse --short HEAD)
+GITSHA    := $$(git rev-parse --short HEAD)
 CURRENT := ${NAME}:current
 
 DOCKER_USER=${CI_REGISTRY_USER:-DEFAULT_USER}
 DOCKER_PASS=${CI_REGISTRY_PASSWORD:-DEFAULT_PASS}
 DOCKER_REG=${CI_REGISTRY:-DEFAULT_REG}
 
+GIT_COMMIT_PATH=
+GIT_COMMIT_PEM=
+
 # Dont run if no params
 show_info:
-	echo Please run with upgrade, Dockerfile, 
+	echo Please run with upgrade, Dockerfile,
+	exit 1
 
 ## Upgrade Versions
 upgrade:
@@ -24,11 +26,12 @@ upgrade:
 Dockerfile: Dockerfile.versions Dockerfile.template
 	sh scripts/Dockerfile.generate.sh
 	# TODO: exit with no error if no change
+	# ToDo. do i bother checking-in the Dockerfile?
 	
 build:
 	docker build --pull -t "${NAME}:${SHA}" .
-	docker push "${NAME}:${SHA}"
-	docker tag "${NAME}:${SHA}" "${CI_COMMIT_REF_SLUG}"
+	docker push "${NAME}:${GITSHA}"
+	docker tag "${NAME}:${GITSHA}" "${CI_COMMIT_REF_SLUG}"
 	docker push "${NAME}:${CI_COMMIT_REF_SLUG}"
 	
 deploy:
