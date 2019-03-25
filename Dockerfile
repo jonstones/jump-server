@@ -53,7 +53,7 @@ RUN rm -rf /var/lib/apt/lists/*
 COPY --from=hashicorp/terraform:light /bin/terraform /bin/terraform
 
 # Add EBRD Proxy Setup Environment variables
-COPY ebrd_proxy.sh /ebrd-proxy.sh
+COPY scripts/ebrd_proxy.sh /ebrd-proxy.sh
 
 RUN echo 'PS1="\u@DOCKER-JMP \d \\t >"' >> /root/.bashrc && echo 'PS1="\u@DOCKER-JMP \d \\t >"' >> /etc/bash.bashrc
 
