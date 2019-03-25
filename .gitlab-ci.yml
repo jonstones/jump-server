@@ -26,12 +26,12 @@ test-build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - make upgrade Dockerfile 
-    - make test-build
+    - make build
 
 update-prod:
   stage: deploy
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - make prod
+    - make deploy
 
