@@ -25,7 +25,7 @@ if [ "$?" -ne 0 ]; then
   mv ${TEMPFILE} ${VERSIONS_FILE}
   save_changes
 else
-
+  echo Versionsfile - no change!
 fi
 
 # If the tempfile still exists, remove it
