@@ -4,6 +4,12 @@ VERSIONFILE="Dockerfile.versions"
 TEMPLATE="Dockerfile.template"
 DESTINATION="Dockerfile"
 
+save_changes() {
+   git add ${DESTINATION}
+   git commit -m "Updated Dockerfile"
+   git push
+}
+
 TEMPFILE=$(mktemp /tmp/Dockerfile_generate.XXXXXXXXX) || { echo "Failed to create temp file"; exit 1; }
 cp "${TEMPLATE}" "${TEMPFILE}"
 
@@ -18,5 +24,10 @@ while read line; do
 
 done < "${VERSIONFILE}"
 
-mv "${TEMPFILE}" "${DESTINATION}"
+diff -q "${TEMPFILE}" "${DESTINATION}" > /dev/null
+if [ "$?" -ne 0 ]; then
+  mv "${TEMPFILE}" "${DESTINATION}"
+else
+   echo No Change!
+fi
 

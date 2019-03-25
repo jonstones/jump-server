@@ -14,15 +14,15 @@ show_info:
 	echo Please run with upgrade, Dockerfile,
 	exit 1
 
-## Upgrade Versions
+## Upgrade Versions File
 upgrade:
-	sh scripts/Dockerfile.upgrade.sh
+	@echo Upgrading Docker Versions File...
+	@sh scripts/Dockerfile.upgrade.sh
     
-## Build docker file from template
+## Build ~ockerfile from template
 Dockerfile: Dockerfile.versions Dockerfile.template
-	sh scripts/Dockerfile.generate.sh
-	# TODO: exit with no error if no change
-	# ToDo. do i bother checking-in the Dockerfile?
+        @echo Generating DockerFile from any updated Versions...
+	@sh scripts/Dockerfile.generate.sh
 	
 build:
 	docker build --pull -t "${NAME}:${GITSHA}" .
@@ -37,11 +37,11 @@ deploy:
 # --- Extras ---
 
 login:
-    docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+	docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 ebrdproxy:
 	@echo EBRD Proxy Set.
 	@export http_proxy="http://ldn3log1.ebrd.com:8888"
 	@export https_proxy="http://ldn3log1.ebrd.com:8888"
 	@export no_proxy="ldn1cvs2.ebrd.com,localhost,docker,docker:2375"
-	
+
