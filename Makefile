@@ -5,7 +5,7 @@
 
 # NAME	:= jonstones/jump-server
 NAME	:= ${CI_PROJECT_PATH}
-GITSHA	:= $(git rev-parse --short HEAD)
+GITSHA	:= $$(git rev-parse --short HEAD;)
 STABLE	:= ${NAME}:stable
 BRANCH	:= ${CI_COMMIT_REF_SLUG}
 
