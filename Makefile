@@ -19,8 +19,9 @@ upgrade:
 	@echo Upgrading Docker Versions File...
 	@sh scripts/Dockerfile.upgrade.sh
     
-## Build ~ockerfile from template
-Dockerfile: Dockerfile.versions Dockerfile.template
+## Build Dockerfile from template
+# Git does not track timestamps, so we cannot do dependency checking on Dockerfile.versions Dockerfile.template
+Dockerfile: 
 	@echo Generating DockerFile from any updated Versions...
 	@sh scripts/Dockerfile.generate.sh
 	
