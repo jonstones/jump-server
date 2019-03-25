@@ -26,8 +26,10 @@ done < "${VERSIONFILE}"
 
 diff -q "${TEMPFILE}" "${DESTINATION}" > /dev/null
 if [ "$?" -ne 0 ]; then
+  echo Dockerfile has changed, comitting...
   mv "${TEMPFILE}" "${DESTINATION}"
+  save_changes
 else
-   echo No Change!
+   echo Dockerfile - No Change!
 fi
 

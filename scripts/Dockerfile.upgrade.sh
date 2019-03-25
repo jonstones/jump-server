@@ -21,8 +21,11 @@ echo 'TERRAFORM_IMAGE_SHA=hashicorp/terraform:light' >> ${TEMPFILE}
 
 diff -q ${TEMPFILE} ${VERSIONS_FILE} > /dev/null
 if [ "$?" -ne 0 ]; then
+  echo Versions File has changed.. comitting...
   mv ${TEMPFILE} ${VERSIONS_FILE}
   save_changes
+else
+
 fi
 
 # If the tempfile still exists, remove it
