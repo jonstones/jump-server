@@ -14,9 +14,9 @@ test-build:
   # the "git-remote" command below adjusts the "push" url to go via git+ssh, and not via https as default
   # essentially, the before_script below enables "git push" to work correctly
   before_script:
-    - 'which ssh-agent || ( apk --update add openssh-client -y )'
+    - 'which ssh-agent || ( apk --update add openssh-client )'
     - eval $(ssh-agent -s)
-    - ssh-add <(echo "$GIT_SSH_PRIV_KEY")
+    - ssh-add < ( echo "$GIT_SSH_PRIV_KEY" )
     - git config --global user.email "autobot@jonstones.com"
     - git config --global user.name "Mr Autobot"
     - mkdir -p ~/.ssh
