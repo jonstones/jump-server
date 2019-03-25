@@ -21,7 +21,7 @@ before_script:
    - cat 'gitlab.com,35.231.145.151 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=' >> ~/.ssh/known_hosts
    - git remote set-url --push origin git@gitlab.com:${CI_PROJECT_PATH}.git
    # Now Docker login to CI/CD Registry
-   - make login
+   - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
 
 update-prod:
   stage: build
