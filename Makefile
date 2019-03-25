@@ -1,8 +1,10 @@
 # When editing, use "set noexpandtab"
 
-# Makefile to control the build of the Dockerfile$
 
-NAME   := jonstones/jump-server
+# Makefile to control the build of the Dockerfile
+
+# NAME   := jonstones/jump-server
+NAME	:= ${CI_PROJECT_PATH}
 GITSHA    := $$(git rev-parse --short HEAD)
 CURRENT := ${NAME}:current
 
@@ -10,7 +12,7 @@ DOCKER_USER=${CI_REGISTRY_USER:-DEFAULT_USER}
 DOCKER_PASS=${CI_REGISTRY_PASSWORD:-DEFAULT_PASS}
 DOCKER_REG=${CI_REGISTRY:-DEFAULT_REG}
 
-GIT_COMMIT_PATH=
+GIT_COMMIT_PATH=git@gitlab.com:${CI_PROJECT_PATH}.git
 GIT_COMMIT_PEM=
 
 # Dont run if no params
