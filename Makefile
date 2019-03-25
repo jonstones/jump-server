@@ -1,11 +1,13 @@
 # When editing, use "set noexpandtab"
-
+# vi: set noexpandtab :
+ 
 # Makefile to control the build of the Dockerfile
 
-# NAME   := jonstones/jump-server
+# NAME	:= jonstones/jump-server
 NAME	:= ${CI_PROJECT_PATH}
-GITSHA    := $$(git rev-parse --short HEAD)
-CURRENT := ${NAME}:current
+GITSHA	:= $$(git rev-parse --short HEAD)
+CURRENT	:= ${NAME}:current
+BRANCH	:= ${CI_COMMIT_REF_SLUG}
 
 # Dont run if no params
 show_info:
@@ -23,13 +25,13 @@ Dockerfile: Dockerfile.versions Dockerfile.template
 	# ToDo. do i bother checking-in the Dockerfile?
 	
 build:
-	docker build --pull -t "${NAME}:${SHA}" .
+	docker build --pull -t "${NAME}:${GITSHA}" .
 	docker push "${NAME}:${GITSHA}"
-	docker tag "${NAME}:${GITSHA}" "${CI_COMMIT_REF_SLUG}"
-	docker push "${NAME}:${CI_COMMIT_REF_SLUG}"
+	docker tag "${NAME}:${GITSHA}" "${NAME}:${BRANCH}"
+	docker push "${NAME}:${BRANCH}"
 	
 deploy:
-	docker tag "${NAME}:${SHA}" "${CURRENT}"
+	docker tag "${NAME}:${GITSHA}" "${CURRENT}"
 	docker push "${CURRENT}"
 
 # --- Extras ---
