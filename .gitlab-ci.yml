@@ -16,7 +16,7 @@ test-build:
   before_script:
     - 'which ssh-agent || ( apk --update add openssh-client )'
     - eval $(ssh-agent -s)
-    - ssh-add < ( echo "$GIT_SSH_PRIV_KEY" )
+    - echo "$GIT_SSH_PRIV_KEY" | ssh-add
     - git config --global user.email "autobot@jonstones.com"
     - git config --global user.name "Mr Autobot"
     - mkdir -p ~/.ssh
