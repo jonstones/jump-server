@@ -1,4 +1,4 @@
-image: docker:latest
+image: docker:alpine
 
 # Reference: https://about.gitlab.com/2017/11/02/automating-boring-git-operations-gitlab-ci/
 
@@ -14,7 +14,7 @@ test-build:
   # the "git-remote" command below adjusts the "push" url to go via git+ssh, and not via https as default
   # essentially, the before_script below enables "git push" to work correctly
   before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - 'which ssh-agent || ( apk --update add openssh-client -y )'
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$GIT_SSH_PRIV_KEY")
     - git config --global user.email "autobot@jonstones.com"
