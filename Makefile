@@ -31,6 +31,7 @@ build:
 	docker push "${NAME}:${BRANCH}"
 	
 deploy:
+	docker pull "${NAME}:${GITSHA}"
 	docker tag "${NAME}:${GITSHA}" "${CURRENT}"
 	docker push "${CURRENT}"
 
