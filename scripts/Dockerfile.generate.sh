@@ -5,9 +5,10 @@ TEMPLATE="Dockerfile.template"
 DESTINATION="Dockerfile"
 
 save_changes() {
+   git checkout master
    git add ${DESTINATION}
    git commit -m "Updated Dockerfile"
-   git push
+   git push origin master
 }
 
 TEMPFILE=$(mktemp /tmp/Dockerfile_generate.XXXXXXXXX) || { echo "Failed to create temp file"; exit 1; }
