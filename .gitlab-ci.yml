@@ -16,10 +16,10 @@ test-build:
   before_script:
     - 'which ssh-agent || ( apk --update add openssh-client )'
     - eval $(ssh-agent -s)
-    - echo "$GIT_SSH_PRIV_KEY" | ssh-add
+    - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - git config --global user.email "autobot@jonstones.com"
     - git config --global user.name "Mr Autobot"
-    - mkdir -p ~/.ssh
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
     - cat 'gitlab.com,35.231.145.151 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=' >> ~/.ssh/known_hosts
     - git remote set-url --push origin git@gitlab.com:${CI_PROJECT_PATH}.git
     # Now Docker login to CI/CD Registry
