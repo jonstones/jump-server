@@ -7,7 +7,7 @@
 DOCKER_IMAGE	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
 GITSHA	:= $(shell git rev-parse --short HEAD)
 STABLE	:= ${DOCKER_IMAGE}:stable
-BRANCH	:= ${CI_COMMIT_REF_SLUG:-master}
+BRANCH	:= ${shell git branch | cut -d ' ' -f 2 }
 
 # Dont run if no params
 show_info:
