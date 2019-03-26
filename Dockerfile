@@ -17,7 +17,7 @@ RUN AZ_REPO=$(lsb_release -cs) \
     && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list \
     && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
     && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
-   && apt-get update && apt-get install -y azure-cli=2.0.60-1~bionic
+   && apt-get update && apt-get install -y azure-cli=
 
 #-------------------------------------------------------
 
@@ -37,12 +37,12 @@ RUN apt-get install -y python git ansible
 RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
     echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-    apt-get update -y && apt-get install google-cloud-sdk=158.0.0-0 -y 
+    apt-get update -y && apt-get install google-cloud-sdk=239.0.0-0 -y 
     
 #-------------------------------------------------------
 
 # install kubectl
-RUN apt-get install -y kubectl
+RUN apt-get install -y kubectl=1.13.4-00
 
 #-------------------------------------------------------
 
@@ -55,5 +55,5 @@ COPY --from=hashicorp/terraform@sha256:330bef7401e02e757e6fa2de69f398fd29fcbfafe
 # Add EBRD Proxy Setup Environment variables
 COPY scripts/ebrd_proxy.sh /ebrd-proxy.sh
 
-RUN echo 'PS1="\u@DOCKER-JMP \d \\t >"' >> /root/.bashrc && echo 'PS1="\u@DOCKER-JMP \d \\t >"' >> /etc/bash.bashrc
+RUN echo 'PS1="JMP \d \\t >"' >> /root/.bashrc && echo 'PS1="JMP \d \\t >"' >> /etc/bash.bashrc
 
