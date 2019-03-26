@@ -8,7 +8,7 @@ CI_PROJECT_PATH := js-devops/sysadmin/jump-server
 DOCKER_IMAGE	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
 GITSHA	:= $(shell git rev-parse --short HEAD)
 STABLE	:= ${DOCKER_IMAGE}:stable
-BRANCH	:= ${shell git branch | cut -d ' ' -f 2 }
+BRANCH	:= $(shell git branch | cut -d ' ' -f 2 )
 
 # Dont run if no params
 show_info:
