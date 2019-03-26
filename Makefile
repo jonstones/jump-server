@@ -4,7 +4,7 @@
 # Makefile to control the build of the Dockerfile
 
 CI_REGISTRY	:= registry.gitlab.com
-CI_PROJECT_PATH := /js-devops/sysadmin/jump-server
+CI_PROJECT_PATH := js-devops/sysadmin/jump-server
 DOCKER_IMAGE	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
 GITSHA	:= $(shell git rev-parse --short HEAD)
 STABLE	:= ${DOCKER_IMAGE}:stable
