@@ -1,4 +1,4 @@
-TODAY=2019-03-25
+TODAY=2019-03-26
 THINGS=stuff
 FIELDS="values work too!"
 FROM_IMAGE_SHA=ubuntu:latest
