@@ -61,18 +61,22 @@ echo "TERRAFORM_IMAGE_SHA=${TERRAFORM_IMG_SHA}" >> ${TEMPFILE}
 
 diff -q ${TEMPFILE} ${VERSIONS_FILE} > /dev/null
 if [ "$?" -ne 0 ]; then
-  echo Versions File has changed.. comitting...
-  # SHow Whats Changed
+  # Show Whats Changed
+  echo
+  echo Versions File has changed.. committing...
   diff -u ${VERSIONS_FILE} ${TEMPFILE}
-
+  echo
+  
   mv ${TEMPFILE} ${VERSIONS_FILE}
   save_changes
 else
+  echo
   echo Versionsfile - no change!
+  cat ${VERSIONS_FILE}
+  echo
 fi
 
 # If the tempfile still exists, remove it
 [ -e ${TEMPFILE} ] && rm ${TEMPFILE}
 
 exit 0
-
