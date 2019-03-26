@@ -3,21 +3,22 @@
  
 # Makefile to control the build of the Dockerfile
 
-# NAME	:= jonstones/jump-server
-NAME	:= ${CI_PROJECT_PATH}
-GITSHA	:= $$(git rev-parse --short HEAD;)
+CI_REGISTRY	:= ${CI_REGISTRY:-gitlab.com}
+NAME	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
+GITSHA	:= $(shell git rev-parse --short HEAD)
 STABLE	:= ${NAME}:stable
-BRANCH	:= ${CI_COMMIT_REF_SLUG}
+BRANCH	:= ${CI_COMMIT_REF_SLUG:-master}
 
 # Dont run if no params
 show_info:
-	echo Please run with upgrade, Dockerfile,
-	exit 1
+	@echo Please run with upgrade, Dockerfile,
+	@exit 1
 
 ## Upgrade Versions File
 upgrade:
 	@echo Upgrading Docker Versions File...
 	@sh scripts/Dockerfile.upgrade.sh
+	@cat Dockerfile.versions
     
 ## Build Dockerfile from template
 # Git does not track timestamps, so we cannot do dependency checking on Dockerfile.versions Dockerfile.template
