@@ -11,11 +11,18 @@ save_changes() {
 
 ######################################################
 
+getSHA() {
+  IMG=$1
+  SHA=$(docker pull ${IMG} | grep 'Digest: ' | cut -d ' ' -f 2)
+  return SHA
+}
+
+FROM_IMAGE_SHA=ubuntu@$(getSHA ubuntu:latest)
+TERRAFORM_IMG_SHA=hashicorp/terraform@$(getSHA hashicorp/terraform:light)
+
 echo "TODAY=`date '+%Y-%m-%d'`" > ${TEMPFILE}
-echo 'THINGS=stuff' >> ${TEMPFILE}
-echo 'FIELDS="values work too!"' >> ${TEMPFILE}
-echo 'FROM_IMAGE_SHA=ubuntu:latest' >> ${TEMPFILE}
-echo 'TERRAFORM_IMAGE_SHA=hashicorp/terraform:light' >> ${TEMPFILE}
+echo "FROM_IMAGE_SHA=${FROM_IMAGE_SHA}" >> ${TEMPFILE}
+echo 'TERRAFORM_IMAGE_SHA=${TERRAFORM_IMG_SHA}' >> ${TEMPFILE}
 
 ########################################################
 
