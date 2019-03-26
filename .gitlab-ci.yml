@@ -1,6 +1,7 @@
 image: docker:stable
 
 # Reference: https://about.gitlab.com/2017/11/02/automating-boring-git-operations-gitlab-ci/
+# Note: the 'set -a & set +a' below, causes the variables declared to be 'exported'
 
 services:
   - docker:dind
@@ -28,7 +29,8 @@ test-build:
     - set
   script:
     - make upgrade generate_dockerfile
-    - source Dockerfile.versions && make build
+    - set -a && source Dockerfile.versions && set +a
+    - make build
 
 update-prod:
   stage: deploy
@@ -36,5 +38,5 @@ update-prod:
     - apk --update add openssh-client git make
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - source Dockerfile.versions && make deploy
-
+    - set -a && source Dockerfile.versions && set +a
+    - make deploy
