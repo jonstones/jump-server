@@ -5,8 +5,8 @@
 #from: ubuntu:latest
 FROM %FROM_IMAGE_SHA%
 
-RUN apt-get update && apt-get -y upgrade && \
-    apt-get install -y apt-transport-https lsb-release software-properties-common dirmngr vim curl
+RUN apt-get update && apt-get -y upgrade >/dv/null && \
+    apt-get install -y apt-transport-https lsb-release software-properties-common dirmngr vim curl >/dev/null 
 
 #-------------------------------------------------------
 
