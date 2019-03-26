@@ -1,4 +1,4 @@
-# When editing, use "set noexpandtab"
+# When editing, use "set noexpandtab", because YAML likes spaces, but Makefiles like tabs! *sigh*
 # vi: set noexpandtab :
  
 # Makefile to control the build of the Dockerfile
@@ -25,16 +25,19 @@ upgrade:
 generate_dockerfile: 
 	@echo Generating DockerFile from any updated Versions...
 	@sh scripts/Dockerfile.generate.sh
-	
+
+# TODAY is taken from the versions file, so it is locked to the current git commit	
 build:
-	docker build --pull -t "${DOCKER_IMAGE}:${GITSHA}" .
-	docker push "${DOCKER_IMAGE}:${GITSHA}"
-	#docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
-	#docker push "${DOCKER_IMAGE}:${BRANCH}"
+    @source Dockerfile.versions
+	docker build --pull -t "${DOCKER_IMAGE}:${GITSHA}-${TODAY}" .
+	docker push "${DOCKER_IMAGE}:${GITSHA}-${TODAY}"
+	@#docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
+	@#docker push "${DOCKER_IMAGE}:${BRANCH}"
 	
 deploy:
-	docker pull "${DOCKER_IMAGE}:${GITSHA}"
-	docker tag "${DOCKER_IMAGE}:${GITSHA}" "${STABLE}"
+	@source Dockerfile.versions
+	docker pull "${DOCKER_IMAGE}:${GITSHA}-${TODAY}"
+	docker tag "${DOCKER_IMAGE}:${GITSHA}-${TODAY}" "${STABLE}"
 	docker push "${STABLE}"
 
 # --- Extras ---
