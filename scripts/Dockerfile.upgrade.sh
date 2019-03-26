@@ -29,22 +29,25 @@ getPackageVersionByDockerImage() {
    return 0
 }
 
-get_lsb-release() {
-   echo $(docker run --rm ${IMG} "/bin/bash" "-c" "lsb_release -c -s" )
+getLSBRelease() {
+   local IMG=$1
+
+   echo $(docker run --rm ${IMG} "/bin/bash" "-c" "cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d '=' -f 2" )
 }
 
 FROM_IMAGE_SHA=ubuntu@$(getSHA ubuntu:latest)
 TERRAFORM_IMG_SHA=hashicorp/terraform@$(getSHA hashicorp/terraform:light)
 
-GOOGLECLI_VERSION=$(curl https://packages.cloud.google.com/apt/dists/cloud-sdk-$(get_lsb-release ${FROM_IMAGE_SHA})/main/binary-amd64/Packages 2>/dev/null | head -n 14 | grep 'Version: ' | cut -d ' ' -f 2 )
+GOOGLECLI_VERSION=$(curl https://packages.cloud.google.com/apt/dists/cloud-sdk-$(getLSBRelease ${FROM_IMAGE_SHA})/main/binary-amd64/Packages 2>/dev/null | head -n 14 | grep 'Version: ' | cut -d ' ' -f 2 )
 
-AZURECLI_VERSION=$(curl https://packages.microsoft.com/repos/azure-cli/dists/$(get_lsb-release ${FROM_IMAGE_SHA})/main/binary-amd64/Packages 2>/dev/null | head -n 14 | grep 'Version: ' | cut -d ' ' -f 2 )
+AZURECLI_VERSION=$(curl https://packages.microsoft.com/repos/azure-cli/dists/$(getLSBRelease ${FROM_IMAGE_SHA})/main/binary-amd64/Packages 2>/dev/null | head -n 14 | grep 'Version: ' | cut -d ' ' -f 2 )
 
 AWSCLI_VERSION=$(getPackageVersionByDockerImage ${FROM_IMAGE_SHA} awscli)
 
 echo "TODAY=`date '+%Y%m%d'`" > ${TEMPFILE}
 echo "FROM_IMAGE_SHA=${FROM_IMAGE_SHA}" >> ${TEMPFILE}
 echo "AWSCLI_VERSION=${AWSCLI_VERSION}" >> ${TEMPFILE}
+echo "AZURECLI_VERSION=${AZURECLI_VERSION}" >> ${TEMPFILE}
 echo "GOOGLECLI_VERSION=${GOOGLECLI_VERSION}" >> ${TEMPFILE}
 echo "TERRAFORM_IMAGE_SHA=${TERRAFORM_IMG_SHA}" >> ${TEMPFILE}
 
