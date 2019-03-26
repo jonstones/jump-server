@@ -3,15 +3,15 @@
  
 # Makefile to control the build of the Dockerfile
 
-CI_REGISTRY	:= ${CI_REGISTRY:-registry.gitlab.com}
-DOCKER_IMAGE	:= "${CI_REGISTRY}/${CI_PROJECT_PATH}"
+#CI_REGISTRY	:= ${CI_REGISTRY:-registry.gitlab.com}
+DOCKER_IMAGE	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
 GITSHA	:= $(shell git rev-parse --short HEAD)
 STABLE	:= ${DOCKER_IMAGE}:stable
 BRANCH	:= ${CI_COMMIT_REF_SLUG:-master}
 
 # Dont run if no params
 show_info:
-	@echo Please run with upgrade, Dockerfile,
+	@echo Please run with upgrade, Dockerfile, build, deploy - extras login, ebrdproxy
 	@exit 1
 
 ## Upgrade Versions File
