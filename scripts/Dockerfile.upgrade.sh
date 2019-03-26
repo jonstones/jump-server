@@ -41,9 +41,11 @@ TERRAFORM_IMG_SHA=hashicorp/terraform@$(getSHA hashicorp/terraform:light)
 
 LSBRelease=$(getLSBRelease ${FROM_IMAGE_SHA})
 
-GOOGLECLI_VERSION=$(curl "https://packages.cloud.google.com/apt/dists/cloud-sdk-${LSBRelease}/main/binary-amd64/Packages" | head -n 14 | grep 'Version: ' | cut -d ' ' -f 2 )
+GOOGLECLI_VERSION=$(curl "https://packages.cloud.google.com/apt/dists/cloud-sdk-${LSBRelease}/main/binary-amd64/Packages" | grep -A 5 -e '^Package: google-cloud-sdk$' | grep 'Version: ' | sort -n | tail -n 1 | cut -d ' ' -f 2 )
 
-AZURECLI_VERSION=$(curl "https://packages.microsoft.com/repos/azure-cli/dists/${LSBRelease}/main/binary-amd64/Packages" | head -n 14 | grep 'Version: ' | cut -d ' ' -f 2 )
+KUBECTL_VERSION=$(curl "https://packages.cloud.google.com/apt/dists/cloud-sdk-${LSBRelease}/main/binary-amd64/Packages" | grep -A 5 -e '^Package: kubectl$' | grep 'Version: ' | sort -n | tail -n 1 | cut -d ' ' -f 2 )
+
+AZURECLI_VERSION=$(curl "https://packages.microsoft.com/repos/azure-cli/dists/${LSBRelease}/main/binary-amd64/Packages" | grep -A 5 -e '^Package: azure-cli$' | grep 'Version: ' | sort -n | tail -n 1 | cut -d ' ' -f 2 )
 
 AWSCLI_VERSION=$(getPackageVersionByDockerImage ${FROM_IMAGE_SHA} awscli)
 
@@ -52,6 +54,7 @@ echo "FROM_IMAGE_SHA=${FROM_IMAGE_SHA}" >> ${TEMPFILE}
 echo "AWSCLI_VERSION=${AWSCLI_VERSION}" >> ${TEMPFILE}
 echo "AZURECLI_VERSION=${AZURECLI_VERSION}" >> ${TEMPFILE}
 echo "GOOGLECLI_VERSION=${GOOGLECLI_VERSION}" >> ${TEMPFILE}
+echo "KUBECTL_VERSION=${KUBECTL_VERSION}" >> ${TEMPFILE}
 echo "TERRAFORM_IMAGE_SHA=${TERRAFORM_IMG_SHA}" >> ${TEMPFILE}
 
 ########################################################

@@ -42,7 +42,7 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
 #-------------------------------------------------------
 
 # install kubectl
-RUN apt-get install -y kubectl
+RUN apt-get install -y kubectl=%KUBECTL_VERSION%
 
 #-------------------------------------------------------
 
@@ -55,5 +55,5 @@ COPY --from=%TERRAFORM_IMAGE_SHA% /bin/terraform /bin/terraform
 # Add EBRD Proxy Setup Environment variables
 COPY scripts/ebrd_proxy.sh /ebrd-proxy.sh
 
-RUN echo 'PS1="\u@DOCKER-JMP \d \\t >"' >> /root/.bashrc && echo 'PS1="\u@DOCKER-JMP \d \\t >"' >> /etc/bash.bashrc
+RUN echo 'PS1="JMP \d \\t >"' >> /root/.bashrc && echo 'PS1="JMP \d \\t >"' >> /etc/bash.bashrc
 
