@@ -27,15 +27,16 @@ generate_dockerfile:
 	@sh scripts/Dockerfile.generate.sh
 
 # TODAY is taken from the versions file, so it is locked to the current git commit	
+# Fetch label: docker inspect app --format "{{ .Config.Labels 'jump_server.git.hash' }}"
 build:
-	docker build --pull -t "${DOCKER_IMAGE}:${GITSHA}-${TODAY}" .
-	docker push "${DOCKER_IMAGE}:${GITSHA}-${TODAY}"
+	docker build --pull --label "jump_server.git.hash=${GITSHA}" -t "${DOCKER_IMAGE}:${TODAY}" .
+	docker push "${DOCKER_IMAGE}:${TODAY}"
 	@#docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
 	@#docker push "${DOCKER_IMAGE}:${BRANCH}"
 	
 deploy:
-	docker pull "${DOCKER_IMAGE}:${GITSHA}-${TODAY}"
-	docker tag "${DOCKER_IMAGE}:${GITSHA}-${TODAY}" "${STABLE}"
+	docker pull "${DOCKER_IMAGE}:${TODAY}"
+	docker tag "${DOCKER_IMAGE}:${TODAY}" "${STABLE}"
 	docker push "${STABLE}"
 
 # --- Extras ---
