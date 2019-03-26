@@ -1,5 +1,3 @@
 TODAY=2019-03-26
-THINGS=stuff
-FIELDS="values work too!"
-FROM_IMAGE_SHA=ubuntu:latest
-TERRAFORM_IMAGE_SHA=hashicorp/terraform:light
+FROM_IMAGE_SHA=ubuntu@sha256:017eef0b616011647b269b5c65826e2e2ebddbe5d1f8c1e56b3599fb14fabec8
+TERRAFORM_IMAGE_SHA=hashicorp/terraform@sha256:330bef7401e02e757e6fa2de69f398fd29fcbfafe2a3b9e8f150486fbcd7915b
