@@ -40,3 +40,5 @@ fi
 # If the tempfile still exists, remove it
 [ -e ${TEMPFILE} ] && rm ${TEMPFILE}
 
+exit 0
+
