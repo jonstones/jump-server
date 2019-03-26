@@ -17,14 +17,14 @@ RUN AZ_REPO=$(lsb_release -cs) \
     && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list \
     && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
     && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
-   && apt-get update && apt-get install -y azure-cli=${AZURECLI_VERSION}
+   && apt-get update && apt-get install -y azure-cli=
 
 #-------------------------------------------------------
 
 # Install AWS CLI
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y tzdata \
     && echo "Etc/UTC" > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata \
-    && apt-get install -y awscli=${AWSCLI_VERSION}
+    && apt-get install -y awscli=1.14.44-1ubuntu1
 
 #-------------------------------------------------------
 
@@ -37,7 +37,7 @@ RUN apt-get install -y python git ansible
 RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
     echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-    apt-get update -y && apt-get install google-cloud-sdk=${GOOGLECLI_VERSION} -y 
+    apt-get update -y && apt-get install google-cloud-sdk= -y 
     
 #-------------------------------------------------------
 
