@@ -19,20 +19,37 @@ getSHA() {
   return 0
 }
 
+getPackageVersionByDockerImage() {
+   local IMG=$1
+   local PKG=$2
+
+   VERSION=$(docker run --rm ${IMG} "/bin/bash" "-c" "apt-get update >/dev/null && apt-cache show ${PKG}" | grep 'Version: ' | cut -d ' ' -f 2 )
+
+   echo ${VERSION}
+   return 0
+}
+
 FROM_IMAGE_SHA=ubuntu@$(getSHA ubuntu:latest)
 TERRAFORM_IMG_SHA=hashicorp/terraform@$(getSHA hashicorp/terraform:light)
 
+AWSCLI_VERSION=$(getPackageVersionByDockerImage ${FROM_IMAGE_SHA} awscli)
+
 echo "TODAY=`date '+%Y%m%d'`" > ${TEMPFILE}
 echo "FROM_IMAGE_SHA=${FROM_IMAGE_SHA}" >> ${TEMPFILE}
+echo "AWSCLI_VERSION=${AWSCLI_VERSION}" >> ${TEMPFILE}
 echo "TERRAFORM_IMAGE_SHA=${TERRAFORM_IMG_SHA}" >> ${TEMPFILE}
 
 ########################################################
 
+
 diff -q ${TEMPFILE} ${VERSIONS_FILE} > /dev/null
 if [ "$?" -ne 0 ]; then
   echo Versions File has changed.. comitting...
+  # SHow Whats Changed
+  diff -u ${VERSIONS_FILE} ${TEMPFILE}
+
   mv ${TEMPFILE} ${VERSIONS_FILE}
-  save_changes
+  #save_changes
 else
   echo Versionsfile - no change!
 fi
