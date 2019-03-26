@@ -32,7 +32,7 @@ diff -q ${TEMPFILE} ${VERSIONS_FILE} > /dev/null
 if [ "$?" -ne 0 ]; then
   echo Versions File has changed.. comitting...
   mv ${TEMPFILE} ${VERSIONS_FILE}
-#  save_changes
+  save_changes
 else
   echo Versionsfile - no change!
 fi
