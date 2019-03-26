@@ -4,10 +4,9 @@
 # Makefile to control the build of the Dockerfile
 
 CI_REGISTRY	:= ${CI_REGISTRY:-registry.gitlab.com}
-NAME	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
+DOCKER_IMAGE	:= "${CI_REGISTRY}/${CI_PROJECT_PATH}""
 GITSHA	:= $(shell git rev-parse --short HEAD)
-
-STABLE	:= ${NAME}:stable
+STABLE	:= ${DOCKER_IMAGE}:stable
 BRANCH	:= ${CI_COMMIT_REF_SLUG:-master}
 
 # Dont run if no params
@@ -28,14 +27,14 @@ generate_dockerfile:
 	@sh scripts/Dockerfile.generate.sh
 	
 build:
-	docker build --pull -t "${NAME}:${GITSHA}" .
-	docker push "${NAME}:${GITSHA}"
-	docker tag "${NAME}:${GITSHA}" "${NAME}:${BRANCH}"
-	docker push "${NAME}:${BRANCH}"
+	docker build --pull -t "${DOCKER_IMAGE}:${GITSHA}" .
+	docker push "${DOCKER_IMAGE}:${GITSHA}"
+	docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
+	docker push "${DOCKER_IMAGE}:${BRANCH}"
 	
 deploy:
-	docker pull "${NAME}:${GITSHA}"
-	docker tag "${NAME}:${GITSHA}" "${STABLE}"
+	docker pull "${DOCKER_IMAGE}:${GITSHA}"
+	docker tag "${DOCKER_IMAGE}:${GITSHA}" "${STABLE}"
 	docker push "${STABLE}"
 
 # --- Extras ---
