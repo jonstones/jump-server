@@ -24,7 +24,7 @@ RUN AZ_REPO=$(lsb_release -cs) \
 # Install AWS CLI
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y tzdata \
     && echo "Etc/UTC" > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata \
-    && apt-get install -y awscli
+    && apt-get install -y awscli=${AWSCLI_VERSION}
 
 #-------------------------------------------------------
 
