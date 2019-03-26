@@ -5,7 +5,7 @@
 #from: ubuntu:latest
 FROM ubuntu@sha256:017eef0b616011647b269b5c65826e2e2ebddbe5d1f8c1e56b3599fb14fabec8
 
-RUN apt-get update && apt-get -y upgrade >/dv/null && \
+RUN apt-get update && apt-get -y upgrade >/dev/null && \
     apt-get install -y apt-transport-https lsb-release software-properties-common dirmngr vim curl >/dev/null 
 
 #-------------------------------------------------------
