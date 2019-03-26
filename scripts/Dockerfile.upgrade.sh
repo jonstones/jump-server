@@ -63,7 +63,7 @@ if [ "$?" -ne 0 ]; then
   diff -u ${VERSIONS_FILE} ${TEMPFILE}
 
   mv ${TEMPFILE} ${VERSIONS_FILE}
-  #save_changes
+  save_changes
 else
   echo Versionsfile - no change!
 fi
