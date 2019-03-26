@@ -8,7 +8,6 @@ CI_PROJECT_PATH := js-devops/sysadmin/jump-server
 DOCKER_IMAGE	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
 GITSHA	:= $(shell git rev-parse --short HEAD)
 STABLE	:= ${DOCKER_IMAGE}:stable
-BRANCH	:= $(shell git branch | cut -d ' ' -f 2 )
 
 # Dont run if no params
 show_info:
@@ -30,8 +29,8 @@ generate_dockerfile:
 build:
 	docker build --pull -t "${DOCKER_IMAGE}:${GITSHA}" .
 	docker push "${DOCKER_IMAGE}:${GITSHA}"
-	docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
-	docker push "${DOCKER_IMAGE}:${BRANCH}"
+	#docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
+	#docker push "${DOCKER_IMAGE}:${BRANCH}"
 	
 deploy:
 	docker pull "${DOCKER_IMAGE}:${GITSHA}"
