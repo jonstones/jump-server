@@ -28,7 +28,7 @@ generate_dockerfile:
 
 # TODAY is taken from the versions file, so it is locked to the current git commit	
 build:
-    @source Dockerfile.versions
+	@source Dockerfile.versions
 	docker build --pull -t "${DOCKER_IMAGE}:${GITSHA}-${TODAY}" .
 	docker push "${DOCKER_IMAGE}:${GITSHA}-${TODAY}"
 	@#docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
