@@ -17,7 +17,7 @@ show_info:
 ## Upgrade Versions File
 upgrade:
 	@echo Upgrading Docker Versions File...
-	sh -x scripts/Dockerfile.upgrade.sh
+	@sh scripts/Dockerfile.upgrade.sh
 	@cat Dockerfile.versions
     
 ## Build Dockerfile from template
