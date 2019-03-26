@@ -3,8 +3,7 @@
  
 # Makefile to control the build of the Dockerfile
 
-CI_REGISTRY	:= ${CI_REGISTRY:-gitlab.com}
-CI_REGISTRY_IMAGE := ${CI_REGISTRY_IMAGE:-unknown}
+CI_REGISTRY	:= ${CI_REGISTRY:-registry.gitlab.com}
 NAME	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
 GITSHA	:= $(shell git rev-parse --short HEAD)
 
