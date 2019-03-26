@@ -22,9 +22,9 @@ getSHA() {
 FROM_IMAGE_SHA=ubuntu@$(getSHA ubuntu:latest)
 TERRAFORM_IMG_SHA=hashicorp/terraform@$(getSHA hashicorp/terraform:light)
 
-echo "export TODAY=`date '+%Y-%m-%d'`" > ${TEMPFILE}
-echo "export FROM_IMAGE_SHA=${FROM_IMAGE_SHA}" >> ${TEMPFILE}
-echo "export TERRAFORM_IMAGE_SHA=${TERRAFORM_IMG_SHA}" >> ${TEMPFILE}
+echo "TODAY=`date '+%Y%m%d'`" > ${TEMPFILE}
+echo "FROM_IMAGE_SHA=${FROM_IMAGE_SHA}" >> ${TEMPFILE}
+echo "TERRAFORM_IMAGE_SHA=${TERRAFORM_IMG_SHA}" >> ${TEMPFILE}
 
 ########################################################
 
