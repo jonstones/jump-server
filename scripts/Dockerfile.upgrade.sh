@@ -4,6 +4,7 @@ VERSIONS_FILE=Dockerfile.versions
 TEMPFILE=$(mktemp /tmp/Dockerfile_upgrade.XXXXXXXXX) || { echo "Failed to create temp file"; exit 1; }
 
 save_changes() {
+   git checkout master
    git add ${VERSIONS_FILE}
    git commit -m "Updated Versions File"
    git push
