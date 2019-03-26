@@ -24,14 +24,19 @@ test-build:
     - git remote set-url --push origin git@gitlab.com:${CI_PROJECT_PATH}.git
     # Now Docker login to CI/CD Registry
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    # Dump out all environment vars - for reference
+    - set
   script:
-    - make upgrade generate_dockerfile 
+    - make upgrade generate_dockerfile
+    - source Dockerfile.versions
     - make build
 
 update-prod:
   stage: deploy
   before_script:
+    - apk --update add openssh-client git make
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
+    - source Dockerfile.versions
     - make deploy
 

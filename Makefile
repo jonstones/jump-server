@@ -1,17 +1,17 @@
-# When editing, use "set noexpandtab"
+# When editing, use "set noexpandtab", because YAML likes spaces, but Makefiles like tabs! *sigh*
 # vi: set noexpandtab :
  
 # Makefile to control the build of the Dockerfile
 
-CI_REGISTRY	:= ${CI_REGISTRY:-gitlab.com}
-NAME	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
+CI_REGISTRY	:= registry.gitlab.com
+CI_PROJECT_PATH := js-devops/sysadmin/jump-server
+DOCKER_IMAGE	:= ${CI_REGISTRY}/${CI_PROJECT_PATH}
 GITSHA	:= $(shell git rev-parse --short HEAD)
-STABLE	:= ${NAME}:stable
-BRANCH	:= ${CI_COMMIT_REF_SLUG:-master}
+STABLE	:= ${DOCKER_IMAGE}:stable
 
 # Dont run if no params
 show_info:
-	@echo Please run with upgrade, Dockerfile,
+	@echo Please run with upgrade, Dockerfile, build, deploy - extras login, ebrdproxy
 	@exit 1
 
 ## Upgrade Versions File
@@ -25,16 +25,17 @@ upgrade:
 generate_dockerfile: 
 	@echo Generating DockerFile from any updated Versions...
 	@sh scripts/Dockerfile.generate.sh
-	
+
+# TODAY is taken from the versions file, so it is locked to the current git commit	
 build:
-	docker build --pull -t "${NAME}:${GITSHA}" .
-	docker push "${NAME}:${GITSHA}"
-	docker tag "${NAME}:${GITSHA}" "${NAME}:${BRANCH}"
-	docker push "${NAME}:${BRANCH}"
+	docker build --pull -t "${DOCKER_IMAGE}:${GITSHA}-${TODAY}" .
+	docker push "${DOCKER_IMAGE}:${GITSHA}-${TODAY}"
+	@#docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
+	@#docker push "${DOCKER_IMAGE}:${BRANCH}"
 	
 deploy:
-	docker pull "${NAME}:${GITSHA}"
-	docker tag "${NAME}:${GITSHA}" "${STABLE}"
+	docker pull "${DOCKER_IMAGE}:${GITSHA}-${TODAY}"
+	docker tag "${DOCKER_IMAGE}:${GITSHA}-${TODAY}" "${STABLE}"
 	docker push "${STABLE}"
 
 # --- Extras ---
