@@ -27,16 +27,20 @@ generate_dockerfile:
 	@sh scripts/Dockerfile.generate.sh
 
 # TODAY is taken from the versions file, so it is locked to the current git commit	
-# Fetch label: docker inspect app --format "{{ .Config.Labels 'jump_server.git.hash' }}"
+# Fetch label: docker inspect app --format "{{ .Config.Labels }}"
+# 'git checkout <commit_sha> && make build' should recreate the old image
 build:
-	docker build --pull --label "jump_server.git.hash=${GITSHA}" -t "${DOCKER_IMAGE}:${TODAY}" .
-	docker push "${DOCKER_IMAGE}:${TODAY}"
-	@#docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${BRANCH}"
-	@#docker push "${DOCKER_IMAGE}:${BRANCH}"
-	
+	docker build --pull --label "jump_server.git.hash=${GITSHA}" -t "${DOCKER_IMAGE}:${GITSHA}" .
+	docker push "${DOCKER_IMAGE}:${GITSHA}"
+
 deploy:
-	docker pull "${DOCKER_IMAGE}:${TODAY}"
-	docker tag "${DOCKER_IMAGE}:${TODAY}" "${STABLE}"
+	docker pull "${DOCKER_IMAGE}:${GITSHA}"
+	docker tag "${DOCKER_IMAGE}:${GITSHA}" "${TODAY}"
+	docker push "${TODAY}"
+
+stable:
+	docker pull "${DOCKER_IMAGE}:${GITSHA}"
+	docker tag "${DOCKER_IMAGE}:${GITSHA}" "${STABLE}"
 	docker push "${STABLE}"
 
 # --- Extras ---
@@ -49,4 +53,3 @@ ebrdproxy:
 	@export http_proxy="http://ldn3log1.ebrd.com:8888"
 	@export https_proxy="http://ldn3log1.ebrd.com:8888"
 	@export no_proxy="ldn1cvs2.ebrd.com,localhost,docker,docker:2375"
-
