@@ -1,6 +1,6 @@
 ##### DONT NOT EDIT ME. THIS FILE IS GENERATED. EDIT Dockerfile.Template #####
 
-#Last Updated: 20190326
+#Last Updated: 20190327
 
 #from: ubuntu:latest
 FROM ubuntu@sha256:017eef0b616011647b269b5c65826e2e2ebddbe5d1f8c1e56b3599fb14fabec8
@@ -17,7 +17,7 @@ RUN AZ_REPO=$(lsb_release -cs) \
     && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list \
     && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
     && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
-   && apt-get update && apt-get install -y azure-cli=2.0.60-1~bionic
+   && apt-get update && apt-get install -y azure-cli=2.0.61-1~bionic
 
 #-------------------------------------------------------
 
