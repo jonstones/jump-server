@@ -35,8 +35,8 @@ build:
 
 deploy:
 	docker pull "${DOCKER_IMAGE}:${GITSHA}"
-	docker tag "${DOCKER_IMAGE}:${GITSHA}" "${TODAY}"
-	docker push "${TODAY}"
+	docker tag "${DOCKER_IMAGE}:${GITSHA}" "${DOCKER_IMAGE}:${TODAY}"
+	docker push "${DOCKER_IMAGE}:${TODAY}"
 
 stable:
 	docker pull "${DOCKER_IMAGE}:${GITSHA}"
