@@ -17,6 +17,9 @@ cp "${TEMPLATE}" "${TEMPFILE}"
 HEADER='##### DONT NOT EDIT ME. THIS FILE IS GENERATED. EDIT Dockerfile.Template #####'
 sed -i -e "s|%HEADER%|${HEADER}|g" "${TEMPFILE}"
 
+#TODAY=$( cat Dockerfile.today )
+#sed -i -e "s|%TODAY%|${TODAY}|g" "${TEMPFILE}"
+
 while read line; do
     setting="$( echo "$line" | cut -d '=' -f 1 )"
     value="$( echo "$line" | cut -d '=' -f 2- )"
