@@ -1,7 +1,5 @@
 ##### DONT NOT EDIT ME. THIS FILE IS GENERATED. EDIT Dockerfile.Template #####
 
-#Last Updated: 20190402
-
 #from: ubuntu:latest
 FROM ubuntu@sha256:017eef0b616011647b269b5c65826e2e2ebddbe5d1f8c1e56b3599fb14fabec8
 
