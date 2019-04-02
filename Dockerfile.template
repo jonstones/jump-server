@@ -1,7 +1,5 @@
 %HEADER%
 
-#Last Updated: %TODAY%
-
 #from: ubuntu:latest
 FROM %FROM_IMAGE_SHA%
 
