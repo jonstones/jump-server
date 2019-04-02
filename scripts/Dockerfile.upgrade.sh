@@ -1,11 +1,12 @@
 #!/bin/sh
 
 VERSIONS_FILE=Dockerfile.versions
+TODAY_FILE=Dockerfile.today
 TEMPFILE=$(mktemp /tmp/Dockerfile_upgrade.XXXXXXXXX) || { echo "Failed to create temp file"; exit 1; }
 
 save_changes() {
    git checkout master
-   git add ${VERSIONS_FILE}
+   git add ${VERSIONS_FILE} ${TODAY_FILE}
    git commit -m "Updated Versions File"
    git push
 }
@@ -49,7 +50,7 @@ AZURECLI_VERSION=$(curl "https://packages.microsoft.com/repos/azure-cli/dists/${
 
 AWSCLI_VERSION=$(getPackageVersionByDockerImage ${FROM_IMAGE_SHA} awscli)
 
-echo "TODAY=`date '+%Y%m%d'`" > ${TEMPFILE}
+echo "TODAY=`date '+%Y%m%d'`" > ${TODAY_FILE}
 echo "FROM_IMAGE_SHA=${FROM_IMAGE_SHA}" >> ${TEMPFILE}
 echo "AWSCLI_VERSION=${AWSCLI_VERSION}" >> ${TEMPFILE}
 echo "AZURECLI_VERSION=${AZURECLI_VERSION}" >> ${TEMPFILE}
