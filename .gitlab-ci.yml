@@ -30,6 +30,7 @@ test-build:
   script:
     - make upgrade generate_dockerfile
     - set -a && source Dockerfile.versions && set +a
+    - set -a && source Dockerfile.today && set +a
     - make build
 
 update-prod:
@@ -39,4 +40,5 @@ update-prod:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - set -a && source Dockerfile.versions && set +a
+    - set -a && source Dockerfile.today && set +a
     - make deploy stable
