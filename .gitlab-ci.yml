@@ -34,6 +34,33 @@ upgrade_build:
       # - set
    script:
       - make upgrade generate_dockerfile
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+
+test-build:
+  stage: build
+  # the "git-remote" command below adjusts the "push" url to go via git+ssh, and not via https as default
+  # essentially, the before_script below enables "git push" to work correctly
+  before_script:
+    - docker info
+    - 'which ssh-agent || ( apk --update add openssh-client git make curl )'
+    - eval $(ssh-agent -s)
+    - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - git config --global user.email "autobot@jonstones.com"
+    - git config --global user.name "Mr Autobot"
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo 'gitlab.com,35.231.145.151 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=' >> ~/.ssh/known_hosts
+    - git remote set-url --push origin git@gitlab.com:${CI_PROJECT_PATH}.git
+    # Now Docker login to CI/CD Registry
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    # Dump out all environment vars - for reference
+    # - set
+  script:
+    - make upgrade generate_dockerfile
+    - set -a && source Dockerfile.versions && set +a
+    - set -a && source Dockerfile.today && set +a
+    - make build
 
 buildNewDockerImage:    
    stage: build
