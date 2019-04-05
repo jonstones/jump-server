@@ -35,7 +35,7 @@ upgrade_build:
    script:
       - make upgrade generate_dockerfile
 
-build_image:    
+build-image:    
    stage: build
    before_script:
       - apk --update add openssh-client git make
