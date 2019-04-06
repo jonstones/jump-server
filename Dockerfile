@@ -1,7 +1,7 @@
 ##### DONT NOT EDIT ME. THIS FILE IS GENERATED. EDIT Dockerfile.Template #####
 
 #from: ubuntu:latest
-FROM ubuntu@sha256:017eef0b616011647b269b5c65826e2e2ebddbe5d1f8c1e56b3599fb14fabec8
+FROM ubuntu@
 
 RUN apt-get update && apt-get -y upgrade >/dev/null && \
     apt-get install -y apt-transport-https lsb-release software-properties-common dirmngr vim curl >/dev/null 
@@ -15,14 +15,14 @@ RUN AZ_REPO=$(lsb_release -cs) \
     && echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | tee /etc/apt/sources.list.d/azure-cli.list \
     && curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg \
     && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg \
-   && apt-get update && apt-get install -y azure-cli=2.0.61-1~bionic
+   && apt-get update && apt-get install -y azure-cli=
 
 #-------------------------------------------------------
 
 # Install AWS CLI
 RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y tzdata \
     && echo "Etc/UTC" > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata \
-    && apt-get install -y awscli=1.14.44-1ubuntu1
+    && apt-get install -y awscli=
 
 #-------------------------------------------------------
 
@@ -35,12 +35,12 @@ RUN apt-get install -y python git ansible
 RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
     echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-    apt-get update -y && apt-get install google-cloud-sdk=241.0.0-0 -y 
+    apt-get update -y && apt-get install google-cloud-sdk= -y 
     
 #-------------------------------------------------------
 
 # install kubectl
-RUN apt-get install -y kubectl=1.14.0-00
+RUN apt-get install -y kubectl=
 
 #-------------------------------------------------------
 
@@ -48,7 +48,7 @@ RUN apt-get install -y kubectl=1.14.0-00
 RUN rm -rf /var/lib/apt/lists/*
 
 # take Terraform from their "latest" image - IMAGE: hashicorp/terraform:light 
-COPY --from=hashicorp/terraform@sha256:330bef7401e02e757e6fa2de69f398fd29fcbfafe2a3b9e8f150486fbcd7915b /bin/terraform /bin/terraform
+COPY --from=hashicorp/terraform@ /bin/terraform /bin/terraform
 
 # Add EBRD Proxy Setup Environment variables
 COPY scripts/ebrd_proxy.sh /ebrd-proxy.sh
