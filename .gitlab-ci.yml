@@ -35,12 +35,12 @@ upgrade_build:
    script:
       - make upgrade generate_dockerfile
 
-build-image:    
+build-image:
    stage: build
    before_script:
       - apk --update add openssh-client git make
       - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    script:
+   script:
       - set -a && source Dockerfile.versions && set +a
       - set -a && source Dockerfile.today && set +a
       - make build
