@@ -45,8 +45,8 @@ build-image:
       - set -a && source Dockerfile.today && set +a
       - make build
    tags:
-    - supermicro
-  only:
+      - supermicro
+   only:
       changes:
          - Dockerfile
       
@@ -60,7 +60,7 @@ update-prod:
       - set -a && source Dockerfile.today && set +a
       - make deploy stable
    tags:
-    - supermicro
+      - supermicro
    only:
       changes:
          - Dockerfile
