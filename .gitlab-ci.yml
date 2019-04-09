@@ -3,12 +3,12 @@ image: docker:stable
 # Reference: https://about.gitlab.com/2017/11/02/automating-boring-git-operations-gitlab-ci/
 # Note: the 'set -a & set +a' below, causes the variables declared to be 'exported'
 
-#services:
-#  - docker:dind
+services:
+  - docker:dind
 
-#variables:
-#  DOCKER_HOST: tcp://docker:2375/
-#  DOCKER_DRIVER: overlay2
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
 
 stages:
   - generate
@@ -20,7 +20,7 @@ upgrade_build:
    # the "git-remote" command below adjusts the "push" url to go via git+ssh, and not via https as default
    # essentially, the before_script below enables "git push" to work correctly
    before_script:
-      - docker ps; # check to ensure we have access to docker.sock
+      - docker version; # check to ensure we have access to docker.sock
       - 'which ssh-agent || ( apk --update add openssh-client git make curl )'
       - eval $(ssh-agent -s)
       - echo "$GIT_SSH_PRIV_KEY" | tr -d '\r' | ssh-add - > /dev/null
