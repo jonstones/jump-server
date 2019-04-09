@@ -46,7 +46,7 @@ stable:
 # --- Extras ---
 
 login:
-	docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+	docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
 
 ebrdproxy:
 	@echo EBRD Proxy Set.
