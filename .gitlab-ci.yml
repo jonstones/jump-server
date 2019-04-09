@@ -39,6 +39,7 @@ build-image:
    stage: build
    before_script:
       - apk --update add openssh-client git make
+      - docker version
       - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
    script:
       - set -a && source Dockerfile.versions && set +a
@@ -54,6 +55,7 @@ update-prod:
    stage: deploy
    before_script:
       - apk --update add openssh-client git make
+      - docker version
       - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
    script:
       - set -a && source Dockerfile.versions && set +a
