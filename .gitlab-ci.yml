@@ -4,7 +4,7 @@ image: docker:stable
 # Note: the 'set -a & set +a' below, causes the variables declared to be 'exported'
 
 #services:
-  - docker:dind
+#  - docker:dind
 
 #variables:
 #  DOCKER_HOST: tcp://docker:2375/
