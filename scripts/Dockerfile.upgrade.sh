@@ -37,6 +37,18 @@ getLSBRelease() {
    return 0
 }
 
+testDockerSock() {
+   docker ps > /dev/null
+   if [ "$?" -ne 0 ]; then
+      echo Error: No Access to docker.sock. exiting...
+      exit 2
+   fi
+   return 0
+}
+
+
+testDockerSock
+
 FROM_IMAGE_SHA=ubuntu@$(getSHA ubuntu:latest)
 TERRAFORM_IMG_SHA=hashicorp/terraform@$(getSHA hashicorp/terraform:light)
 
