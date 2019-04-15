@@ -1,4 +1,4 @@
-#Dealing with low disk space on your persistent file system
+# Dealing with low disk space on your persistent file system
 
 You might find that the 128 MB we assigned earlier for your persistent file system turn out to be too small.  You can fix this by making the file larger without deleting your customizations.
 
