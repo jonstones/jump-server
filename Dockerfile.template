@@ -54,5 +54,8 @@ COPY --from=%TERRAFORM_IMAGE_SHA% /bin/terraform /bin/terraform
 # Add EBRD Proxy Setup Environment variables
 COPY scripts/ebrd_proxy.sh /ebrd-proxy.sh
 
+WORKDIR /root
+
 RUN echo 'PS1="JMP \d \\t >"' >> /root/.bashrc && echo 'PS1="JMP \d \\t >"' >> /etc/bash.bashrc
 
+#banner!
