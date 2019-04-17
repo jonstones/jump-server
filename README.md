@@ -19,5 +19,4 @@ not doing:
 * vagrant - too many dependency packages
 
 ## Ever-Green Policy
-
-The image is rebuilt every day at 4am, picking up the latest in all the tools above. 
+This Dockerfile is an attempt to build an image which includes the versions of the software dependencies. The idea being that we could build an *old* commit point, and still end up with our old image...
