@@ -47,9 +47,4 @@ stable:
 
 login:
 	docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
-
-ebrdproxy:
-	@echo EBRD Proxy Set.
-	@export http_proxy="http://ldn3log1.ebrd.com:8888"
-	@export https_proxy="http://ldn3log1.ebrd.com:8888"
-	@export no_proxy="ldn1cvs2.ebrd.com,localhost,docker,docker:2375"
+	
