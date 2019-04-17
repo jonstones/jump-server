@@ -51,9 +51,6 @@ RUN rm -rf /var/lib/apt/lists/*
 # take Terraform from their "latest" image - IMAGE: hashicorp/terraform:light 
 COPY --from=hashicorp/terraform@sha256:330bef7401e02e757e6fa2de69f398fd29fcbfafe2a3b9e8f150486fbcd7915b /bin/terraform /bin/terraform
 
-# Add EBRD Proxy Setup Environment variables
-COPY scripts/ebrd_proxy.sh /ebrd-proxy.sh
-
 WORKDIR /root
 
 RUN echo 'PS1="JMP \d \\t >"' >> /root/.bashrc && echo 'PS1="JMP \d \\t >"' >> /etc/bash.bashrc
