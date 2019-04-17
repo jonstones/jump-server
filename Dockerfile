@@ -26,10 +26,10 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
 
 # Add Python, git and ansible 
 
-# Install Python 3.6
-RUN apt-get -y install python36 python36-pip && \
-    pip3.6 install --upgrade pip && \
-    pip3.6 install git+https://github.com/ansible/ansible.git@devel
+# Install Python 3
+RUN apt-get -y install python3 python3-pip && \
+    pip3 install --upgrade pip && \
+    pip install git+https://github.com/ansible/ansible.git@devel
 
 # Set Python3 as the default interpreter
 RUN rm -f /usr/bin/python && \
@@ -45,7 +45,7 @@ RUN ansible-galaxy install Azure.azure_modules ; \
 RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
     echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
-    apt-get update -y && apt-get install google-cloud-sdk
+    apt-get update -y && apt-get install -y google-cloud-sdk
     
 #-------------------------------------------------------
 
