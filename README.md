@@ -17,6 +17,3 @@ The current base image is ubuntu:latest, and it has the following installed:
 not doing:
 
 * vagrant - too many dependency packages
-
-## Ever-Green Policy
-This Dockerfile is an attempt to build an image which includes the versions of the software dependencies. The idea being that we could build an *old* commit point, and still end up with our old image...
