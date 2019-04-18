@@ -62,6 +62,6 @@ COPY --from=hashicorp/terraform:light /bin/terraform /bin/terraform
 
 WORKDIR /root
 
-RUN echo 'PS1="JMP \d \\t \W >"' >> /root/.bashrc && echo 'PS1="JMP \d \\t \W >"' >> /etc/bash.bashrc
+RUN echo 'PS1="JMP \d \\t \W > "' >> /root/.bashrc && echo 'PS1="JMP \d \\t \W > "' >> /etc/bash.bashrc
 
 #banner!
