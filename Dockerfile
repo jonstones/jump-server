@@ -25,7 +25,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
 #-------------------------------------------------------
 
 # Install ansible roles
-RUN apt-get install -y ansible-galaxy && ansible-galaxy install Azure.azure_modules && \
+RUN apt-get install -y python python-pip ansible && ansible-galaxy install Azure.azure_modules && \
     pip install --ignore-installed -r ~/.ansible/roles/Azure.azure_modules/files/requirements-azure.txt
 
 #-------------------------------------------------------
