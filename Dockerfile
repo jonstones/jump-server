@@ -26,7 +26,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
 
 # Install Python 3.6
 RUN export PATH=/usr/local/git/bin:$PATH && \
-    yum -y install python3 python3-pip && \
+    apt-get install -y python3 python3-pip && \
     pip3 install --upgrade pip && \
     pip3 install git+https://github.com/ansible/ansible.git@devel
 
