@@ -24,8 +24,18 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -
 
 #-------------------------------------------------------
 
+# Install Python 3.6
+RUN export PATH=/usr/local/git/bin:$PATH && \
+    yum -y install python3 python3-pip && \
+    pip3 install --upgrade pip && \
+    pip3 install git+https://github.com/ansible/ansible.git@devel
+
+# Set Python3 as the default interpreter
+RUN rm -f /usr/bin/python && ln -s /usr/bin/python3 /usr/bin/python && \
+    rm -f /usr/bin/pip && ln -s /usr/bin/pip3 /usr/bin/pip
+
 # Install ansible roles
-RUN apt-get install -y python python-pip ansible && ansible-galaxy install Azure.azure_modules && \
+RUN ansible-galaxy install Azure.azure_modules && \
     pip install --ignore-installed -r ~/.ansible/roles/Azure.azure_modules/files/requirements-azure.txt
 
 #-------------------------------------------------------
