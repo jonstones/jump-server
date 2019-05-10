@@ -39,7 +39,7 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
 #-------------------------------------------------------
 
 # install kubectl
-RUN apt-get install -y kubectl &&
+RUN apt-get install -y kubectl && \
     echo "source <(kubectl completion bash)" >> /root/.bashrc
 
 #-------------------------------------------------------
